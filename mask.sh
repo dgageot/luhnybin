@@ -1,4 +1,5 @@
 #!/bin/sh
 
 # Call your program here instead of cat.
-cat
+cd solution/src
+javac net/gageot/*.java && java net.gageot.LuhnyFilter
