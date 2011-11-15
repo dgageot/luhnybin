@@ -6,9 +6,9 @@ import java.io.InputStream;
 import java.io.PrintStream;
 
 public class LuhnyFilter {
+	final static int[][] DIGIT_VALUES = { { 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 }, { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 } };
 	final StringBuilder in = new StringBuilder();
 	final StringBuilder out = new StringBuilder();
-	final static int[][] value = { { 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 }, { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 } };
 
 	public static void main(String[] args) throws Exception {
 		new LuhnyFilter().anonymize(System.in, System.out);
@@ -38,7 +38,7 @@ public class LuhnyFilter {
 		int sum = 0;
 
 		for (int i = 1; i <= in.length() && i <= 16; i++) {
-			sum += value[i % 2][in.charAt(in.length() - i) - '0'];
+			sum += DIGIT_VALUES[i % 2][in.charAt(in.length() - i) - '0'];
 			if (0 == (sum % 10)) {
 				max = i;
 			}
