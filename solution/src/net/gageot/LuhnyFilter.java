@@ -18,25 +18,19 @@ public class LuhnyFilter {
 		while (input.available() > 0) {
 			char c = (char) input.read();
 
+			out.append(c);
+
 			if (isDigit(c)) {
 				in.append(c);
-				out.append(c);
 				replaceLongestLuhny();
-			} else if ((' ' == c) || ('-' == c)) {
-				out.append(c);
-			} else {
-				flush(output);
-				output.write(c);
+			} else if ((' ' != c) && ('-' != c)) {
+				output.append(out);
+				out.setLength(0);
+				in.setLength(0);
 			}
 		}
 
-		flush(output);
-	}
-
-	void flush(PrintStream output) {
 		output.append(out);
-		out.setLength(0);
-		in.setLength(0);
 	}
 
 	void replaceLongestLuhny() {
@@ -49,7 +43,7 @@ public class LuhnyFilter {
 				max = i;
 			}
 		}
-		
+
 		if (max < 14)
 			return;
 
