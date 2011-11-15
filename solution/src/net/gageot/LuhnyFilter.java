@@ -34,9 +34,7 @@ public class LuhnyFilter {
 	}
 
 	void flush(PrintStream output) {
-		for (int i = 0; i < out.length(); i++) {
-			output.write(out.charAt(i));
-		}
+		output.append(out);
 		out.setLength(0);
 		in.setLength(0);
 	}
