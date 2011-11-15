@@ -68,7 +68,7 @@ public class LuhnyFilterTest {
 		ByteArrayInputStream input = new ByteArrayInputStream(log.getBytes());
 
 		try {
-			new LuhnyFilter().obfuscate(input, new PrintStream(output));
+			new LuhnyFilter().anonymize(input, new PrintStream(output));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
