@@ -1,6 +1,7 @@
 package net.gageot;
 
 import static java.lang.Character.isDigit;
+import static java.lang.Math.min;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -37,7 +38,7 @@ public class LuhnyFilter {
 		int max = 0;
 		int sum = 0;
 
-		for (int i = 1; i <= in.size() && i <= 16; i++) {
+		for (int i = 1; i <= min(in.size(), 16); i++) {
 			if (0 == ((sum += VALUE[i % 2][in.get(in.size() - i)]) % 10) && i >= 14) {
 				max = i;
 			}
