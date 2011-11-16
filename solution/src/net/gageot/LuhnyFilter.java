@@ -4,11 +4,12 @@ import static java.lang.Character.isDigit;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.LinkedList;
 
 public class LuhnyFilter {
-	final static int[][] DIGIT_VALUES = { { 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 }, { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 } };
-	final StringBuilder in = new StringBuilder();
+	final LinkedList<Integer> in = new LinkedList<Integer>();
 	final StringBuilder out = new StringBuilder();
+	final static int[][] VALUE = { { 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 }, { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 } };
 
 	public static void main(String[] args) throws Exception {
 		new LuhnyFilter().anonymize(System.in, System.out);
@@ -21,12 +22,12 @@ public class LuhnyFilter {
 			out.append(c);
 
 			if (isDigit(c)) {
-				in.append(c);
+				in.add(c - '0');
 				replaceLongestLuhny();
 			} else if ((' ' != c) && ('-' != c)) {
 				output.append(out);
 				out.setLength(0);
-				in.setLength(0);
+				in.clear();
 			}
 		}
 
@@ -37,21 +38,17 @@ public class LuhnyFilter {
 		int max = 0;
 		int sum = 0;
 
-		for (int i = 1; i <= in.length() && i <= 16; i++) {
-			sum += DIGIT_VALUES[i % 2][in.charAt(in.length() - i) - '0'];
-			if (0 == (sum % 10)) {
+		for (int i = 1; i <= in.size() && i <= 16; i++) {
+			if (0 == ((sum += VALUE[i % 2][in.get(in.size() - i)]) % 10) && i >= 14) {
 				max = i;
 			}
 		}
 
-		if (max < 14)
-			return;
-
-		for (int i = out.length() - 1; i >= 0; i--) {
-			if (isDigit(out.charAt(i))) {
-				out.setCharAt(i, 'X');
-				if (--max == 0)
-					return;
+		for (int i = out.length() - 1; max > 0;) {
+			char c = out.charAt(i--);
+			if (isDigit(c) || 'X' == c) {
+				out.setCharAt(i + 1, 'X');
+				max--;
 			}
 		}
 	}
