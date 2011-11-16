@@ -16,10 +16,9 @@ public class LuhnyFilter {
 	}
 
 	void anonymize(InputStream input, PrintStream output) throws IOException {
-		while (input.available() > 0) {
-			char c = (char) input.read();
-
-			out.append(c);
+		int c;
+		while (-1 != (c = input.read())) {
+			out.append((char) c);
 
 			if (isDigit(c)) {
 				in.add(c - '0');
