@@ -5,10 +5,11 @@ import static java.lang.Math.min;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LuhnyFilter {
-	final LinkedList<Integer> in = new LinkedList<Integer>();
+	final List<Integer> in = new ArrayList<Integer>();
 	final StringBuilder out = new StringBuilder();
 	final static int[][] VALUE = { { 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 }, { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 } };
 
@@ -46,8 +47,10 @@ public class LuhnyFilter {
 
 		for (int i = out.length() - 1; max > 0;) {
 			char c = out.charAt(i--);
-			if (isDigit(c) || 'X' == c) {
+			if (isDigit(c)) {
 				out.setCharAt(i + 1, 'X');
+				max--;
+			}else if ('X' == c) {
 				max--;
 			}
 		}
